@@ -33,7 +33,7 @@ for user in users_set:
 def send_welcome(message):
     chat_id = message.chat.id
     if chat_id not in users_set:
-        with open('users.txt','w') as file:
+        with open('users.txt','a') as file:
             file.write(f"{chat_id}\n")
     bot.reply_to(message, "Льоня на связі")
 @bot.message_handler(commands=['get_info'])
