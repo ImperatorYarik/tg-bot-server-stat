@@ -8,7 +8,14 @@ PASSWORD = os.environ.get('PASSWORD')
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-users_set = ()
+users_set = []
+
+response = requests.get('http://ipinfo.io/ip')
+stats_response = requests.get('http://localhost:5000/metrix')
+stats_json = stats_response.json()
+stats = ''
+for key, value in stats_json.items():
+    stats += f' | {key}: {value}\n'
 
 with open('users.txt', 'r') as file:
     for line in file:
