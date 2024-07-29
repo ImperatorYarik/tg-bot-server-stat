@@ -8,9 +8,26 @@ PASSWORD = os.environ.get('PASSWORD')
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
+users_set = ()
+
+with open('users.txt', 'r') as file:
+    for line in file:
+        users_set.append(line)
+
+for user in users_set:
+    try:
+        bot.send_message(user, f'Current ip: {response.text.strip()}\nJenkins: http://{response.text.strip()}:20808\nStats:\n{stats}')
+    except:
+        continue
+
+
 
 @bot.message_handler(commands=['start', 'hello'])
 def send_welcome(message):
+    chat_id = message.chat.id
+    if chat_id not in users_set:
+        with open('users.txt','w') as file:
+            file.write(f"{chat_id}\n")
     bot.reply_to(message, "Льоня на связі")
 @bot.message_handler(commands=['get_info'])
 def get_info(message):
